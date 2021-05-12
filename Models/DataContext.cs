@@ -8,5 +8,6 @@ namespace MilkingPigeons.Models
 
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Challenge> Challenges { get; set; }
     }
 }
