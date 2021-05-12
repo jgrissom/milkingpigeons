@@ -7,15 +7,15 @@ namespace MilkingPigeons.Controllers
 {
     public class APIController : Controller
     {
-        // this controller depends on the NorthwindRepository
+        // this controller depends on the DataRepository
         private DataContext _dataContext;
         public APIController(DataContext db) => _dataContext = db;
 
-        [HttpGet, Route("api/category")]
         // returns all categories
-        public IEnumerable<Category> Get() => _dataContext.Categories.OrderBy(c => c.Name);
-        [HttpGet, Route("api/category/{id}")]
-        // returns specific category
-        public Category Get(int id) => _dataContext.Categories.FirstOrDefault(c => c.CategoryId == id);
+        [HttpGet, Route("api/category")]
+        public IEnumerable<CategoryJson> GetCategories() => _dataContext.Categories.Select(c => new CategoryJson{Id = c.CategoryId, Name = c.Name}).OrderBy(c => c.Name);
+        // returns all challenges based on Active T/F
+        [HttpGet, Route("api/challenge/active/{active}")]
+        public IEnumerable<ChallengeJson> GetActiveChallenges(bool active) => _dataContext.Challenges.Where(c => c.Active == active).Select(c => new ChallengeJson{Id = c.ChallengeId, Name = c.Name, CatId = c.CategoryId}).OrderBy(c => c.Name);
     }
 }
