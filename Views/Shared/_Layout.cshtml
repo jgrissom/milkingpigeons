@@ -2,20 +2,31 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>milking pigeons</title>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- material icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Chicle&family=Lato&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!-- client css -->
+    <link href="/css/client.css" rel="stylesheet">
+    <!-- favicon -->
+    <link rel="icon" href="favicon.png">
 </head>
 <body>
-    <div class="container">
+    
+    <header>
+        <div class="container">
+            <object id="pigeon" data="/svg/pigeon.svg"></object>
+            <span id="pigeons_h">Milking Pigeons</span>
+        </div>
+    </header>
+    <div class="container content">
         @RenderBody()
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- bootstrap combined -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

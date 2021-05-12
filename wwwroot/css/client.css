@@ -1,0 +1,38 @@
+body {
+    background-color:#eaeaea;
+}
+header {
+    margin: 0;
+    border-top: 2px solid #565656;
+    border-bottom: 2px solid #565656;
+    color: #565656;
+    font-family: 'Chicle', cursive;
+    font-size: 2.2em;
+}
+#pigeon {
+    margin-top:8px;
+    margin-right:8px;
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.8));
+}
+#pigeons_h {
+    color: #ffffff;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
+}
+.content {
+    font-family: 'Lato',sans-serif;
+    font-size: 1.2em;
+    padding-top: 5px;
+}
+a {
+    font-size: 1.2em;
+    color: #565656;
+    opacity: .8;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: #565656;
+    opacity: .5;
+}
