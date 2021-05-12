@@ -1,0 +1,12 @@
+@using MilkingPigeons.Models
+@model IEnumerable<Team>
+
+<h2>Team Names</h2>
+<ul>
+    @foreach (var team in Model)
+    {
+        <li>@team.Name</li>
+    }
+</ul>
+<hr>
+<a href="/">Home</a>
