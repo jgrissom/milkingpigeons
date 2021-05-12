@@ -30,7 +30,8 @@ namespace MilkingPigeons
         {
             // this is where we use the config info for our connection string
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration["Data:MilkingPigeons:ConnectionString"]));
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +41,7 @@ namespace MilkingPigeons
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseRouting();
 
