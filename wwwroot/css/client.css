@@ -22,17 +22,10 @@ header {
 }
 .content {
     font-family: 'Lato',sans-serif;
-    font-size: 1.2em;
-    padding-top: 5px;
+}
+.content p, .accordion {
+    margin-top: 15px;
 }
 a {
-    font-size: 1.2em;
-    color: #565656;
-    opacity: .8;
     text-decoration: none;
-}
-a:hover {
-    text-decoration: none;
-    color: #565656;
-    opacity: .5;
 }
