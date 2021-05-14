@@ -22,31 +22,55 @@
   </header>
   <div class="container content">
       <p style="font-size:1.6em"><strong>Select a category</strong></p>
-      <div class="list-group" id="category">
-          <!-- <button type="button" class="list-group-item list-group-item-action">History</button>
-          <button type="button" class="list-group-item list-group-item-action">Sports</button> -->
+      <div class="spinner-border text-primary" role="status" id="loading">
+        <span class="visually-hidden">Loading...</span>
       </div>
-      <div class="invisible">
+      <div class="list-group" id="category">
+        <!-- categories go here -->
+      </div>
+      <div class="invisible" id="challengesList">
         <p style="font-size:1.6em"><strong>Select your challenge</strong></p>
         <div class="list-group" id="challenge">
-            <!-- <button type="button" class="list-group-item list-group-item-action" data-id="2">US Government</button> -->
+            <!-- challenges go here -->
         </div>
       </div>
   </div>
   <script>
-    window.onload=()=>{
-      getCategories();
-    }
-    async function getCategories() {
+    window.onload= async()=>{
+      const data = await getData();
+      document.getElementById('loading').style.display = 'none';
       // populate list of categories
       let html = '';
-      try {
-        let res = await fetch('/api/category', {method: 'GET'});
-        let data = await res.json();
-        data.forEach(c => {
-          html += '<button type="button" class="list-group-item list-group-item-action" data-id="' + c.id + '">' + c.name + '</button>'
+      data.forEach(cat => {
+        html += '<button type="button" class="list-group-item list-group-item-action category" data-id="' + cat.id + '">' + cat.name + '</button>'
+      });
+      document.getElementById('category').innerHTML = html;
+
+      document.getElementById('category').onclick = function(event) {
+        const button = event.target.closest('button');
+        if (!button) return;
+        // remove active class from all buttons
+        document.querySelectorAll('button.category').forEach((el) => {
+          el.classList.remove('active');
         });
-        document.getElementById('category').innerHTML = html;
+        // add active class to selected button
+        button.classList.add('active');
+        // show challenges for selected category
+        let challengeHtml = '';
+        const id = parseInt(button.dataset.id);
+        const challenges = data.filter(cat => cat.id == id)[0].ch;
+        challenges.forEach((challenge) => {
+          challengeHtml += '<a href="/teams.html?id=' + challenge.id + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
+        });
+        document.getElementById('challengesList').classList.remove('invisible');
+        document.getElementById('challenge').innerHTML = challengeHtml;
+      }
+    }
+    async function getData() {
+      try {
+        let res = await fetch('/api/categorieswithchallenges');
+        let data = await res.json();
+        return await data;
       } catch (error) {
         console.log(error);
       }
