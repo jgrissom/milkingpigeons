@@ -17,23 +17,29 @@
   <header>
       <div class="container">
           <object id="pigeon" data="/svg/pigeon.svg"></object>
-          <span id="pigeons_h">Milking Pigeons - Select Challenge</span>
+          <span id="pigeons_h">Milking Pigeons - Select challenge</span>
       </div>
   </header>
   <div class="container content">
-      <p style="font-size:1.6em"><strong>Select a category</strong></p>
-      <div class="spinner-border text-primary" role="status" id="loading">
-        <span class="visually-hidden">Loading...</span>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Select challenge</li>
+      </ol>
+    </nav>
+    <p style="font-size:1.6em"><strong>Select a category</strong></p>
+    <div class="spinner-border text-primary" role="status" id="loading">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="list-group" id="category">
+      <!-- categories go here -->
+    </div>
+    <div style="display:none;" id="challengesList">
+      <p style="font-size:1.6em"><strong>Select your challenge</strong></p>
+      <div class="list-group" id="challenge">
+          <!-- challenges go here -->
       </div>
-      <div class="list-group" id="category">
-        <!-- categories go here -->
-      </div>
-      <div class="invisible" id="challengesList">
-        <p style="font-size:1.6em"><strong>Select your challenge</strong></p>
-        <div class="list-group" id="challenge">
-            <!-- challenges go here -->
-        </div>
-      </div>
+    </div>
   </div>
   <script>
     window.onload= async()=>{
@@ -60,15 +66,15 @@
         const id = parseInt(button.dataset.id);
         const challenges = data.filter(cat => cat.id == id)[0].ch;
         challenges.forEach((challenge) => {
-          challengeHtml += '<a href="/teams.html?id=' + challenge.id + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
+          challengeHtml += '<a href="teams.html?id=' + challenge.id + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
         });
-        document.getElementById('challengesList').classList.remove('invisible');
+        document.getElementById('challengesList').style.display = 'block';
         document.getElementById('challenge').innerHTML = challengeHtml;
       }
     }
     async function getData() {
       try {
-        let res = await fetch('/api/categorieswithchallenges');
+        let res = await fetch('api/categorieswithchallenges');
         let data = await res.json();
         return await data;
       } catch (error) {
