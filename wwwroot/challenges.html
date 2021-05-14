@@ -64,7 +64,7 @@
         // show challenges for selected category
         let challengeHtml = '';
         const id = parseInt(button.dataset.id);
-        const challenges = data.filter(cat => cat.id == id)[0].ch;
+        const challenges = data.filter(cat => cat.id == id)[0].challenges;
         challenges.forEach((challenge) => {
           challengeHtml += '<a href="teams.html?id=' + challenge.id + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
         });
@@ -74,10 +74,11 @@
     }
     async function getData() {
       try {
-        let res = await fetch('api/categorieswithchallenges');
+        let res = await fetch('api/category');
         let data = await res.json();
         return await data;
       } catch (error) {
+        // TODO: cusatomize error
         console.log(error);
       }
     }
