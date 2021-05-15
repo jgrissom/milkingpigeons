@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MilkingPigeons.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace MilkingPigeons.Controllers
 {
@@ -12,18 +13,24 @@ namespace MilkingPigeons.Controllers
         private DataContext _dataContext;
         public APIController(DataContext db) => _dataContext = db;
 
-        // returns all categories (with at least 1 chalenge)
-        // [HttpGet, Route("api/category")]
-        // public IEnumerable<CategoryJson> GetCategories() => _dataContext.Categories.Where(c => c.Challenges.Count > 0).Select(c => new CategoryJson{Id = c.CategoryId, Name = c.Name}).OrderBy(c => c.Name);
-        // returns all challenges based on Active T/F
-        // [HttpGet, Route("api/challenge/active/{active}")]
-        // public IEnumerable<ChallengeJson> GetActiveChallenges(bool active) => _dataContext.Challenges.Where(c => c.Active == active).Select(c => new ChallengeJson{Id = c.ChallengeId, Name = c.Name, CatId = c.CategoryId}).OrderBy(c => c.Name);
-        // returns all categories (with at least 1 challenge) and related challenges that are active
         [HttpGet, Route("api/category")]
         public IEnumerable<CategoryJson> GetCategories() => 
             _dataContext.Categories.Where(c => c.Challenges.Count > 0)
             .Select(c => new CategoryJson{ Id = c.CategoryId, Name = c.Name, Challenges = c.Challenges
             .Where(ch => ch.Active == true)
             .Select(ch => new ChallengeJson{ Id = ch.ChallengeId, Name = ch.Name }) });
+        [HttpPost, Route("api/team")]
+        //public Team PostTeam([FromBody] Team team) => _dataContext.AddTeam(team.Name);
+        public IActionResult PostTeam([FromBody] Team team)
+        {
+            // first make sure team name is unique
+            // if (_dataContext.Teams.Any(t => t.Name == team.Name)) {
+            //     return Conflict();
+            // }
+            // generate pin
+            //int next_pin = _dataContext.Teams.Max(t => Convert.ToInt32(t.Pin)) + 1;
+            //return Ok(_dataContext.AddTeam(team.Name));
+            return Ok();
+        }
     }
 }

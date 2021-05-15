@@ -49,6 +49,9 @@ namespace MilkingPigeons.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Pin")
+                        .HasColumnType("int");
+
                     b.HasKey("ChallengeId");
 
                     b.HasIndex("CategoryId");
@@ -64,9 +67,6 @@ namespace MilkingPigeons.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Pin")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeamId");

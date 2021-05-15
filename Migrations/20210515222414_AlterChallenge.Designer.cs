@@ -9,8 +9,8 @@ using MilkingPigeons.Models;
 namespace MilkingPigeons.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210514164200_AlterTeam")]
-    partial class AlterTeam
+    [Migration("20210515222414_AlterChallenge")]
+    partial class AlterChallenge
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,9 @@ namespace MilkingPigeons.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Pin")
+                        .HasColumnType("int");
+
                     b.HasKey("ChallengeId");
 
                     b.HasIndex("CategoryId");
@@ -66,9 +69,6 @@ namespace MilkingPigeons.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Pin")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeamId");

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System;
 
 namespace MilkingPigeons.Models
 {
@@ -9,5 +11,11 @@ namespace MilkingPigeons.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Challenge> Challenges { get; set; }
+        public Team AddTeam(string Name)
+        {
+            // TODO: create team
+            //Team team = new Team { Name = Name, Pin = Convert.ToString(next_pin)};
+            return null;
+        }
     }
 }

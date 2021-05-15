@@ -4,6 +4,5 @@ namespace MilkingPigeons.Models
     {
         public int TeamId { get; set; }
         public string Name { get; set; }
-        public string Pin { get; set; }
     }
 }
