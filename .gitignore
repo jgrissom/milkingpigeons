@@ -16,6 +16,7 @@ launchsettings.json
 *.DS_Store
 launch.json
 tasks.json
+.vscode
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -22,6 +22,7 @@ namespace MilkingPigeons.Controllers
         [HttpPost, Route("api/team")]
         public IActionResult AddTeam([FromBody] Team team)
         {
+            // if team id was not included in request, this team must be created
             if (team.TeamId == 0)
             {
                 // add new team, first check for duplicate team name
@@ -30,6 +31,14 @@ namespace MilkingPigeons.Controllers
                     return Conflict();
                 }
                 _dataContext.AddTeam(team);
+            } else {
+                // make sure team name and team id match
+                if (_dataContext.Teams.Any(t => t.TeamId == team.TeamId && t.Name == team.Name) == false)
+                {
+                    return BadRequest();
+                }
+                // return no content if team name and teamd id already exist
+                return NoContent();
             }
             return Ok(team);
         }
