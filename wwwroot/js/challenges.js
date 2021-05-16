@@ -22,7 +22,7 @@ window.onload= async()=>{
         const id = parseInt(button.dataset.id);
         const challenges = categories.filter(cat => cat.id == id)[0].challenges;
         challenges.forEach((challenge) => {
-        challengeHtml += '<a href="teams.html?id=' + challenge.id + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
+        challengeHtml += '<a href="teams.html?pin=' + challenge.pin + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
         });
         document.getElementById('challengesList').style.display = 'block';
         document.getElementById('challenge').innerHTML = challengeHtml;

@@ -11,11 +11,17 @@ namespace MilkingPigeons.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Challenge> Challenges { get; set; }
-        public Team AddTeam(string Name)
+        public Team AddTeam(Team team)
         {
-            // TODO: create team
-            //Team team = new Team { Name = Name, Pin = Convert.ToString(next_pin)};
-            return null;
+            this.Teams.Add(team);
+            this.SaveChanges();
+            return team;
         }
+        // public void RenameTeam(Team team)
+        // {
+        //     Team savedTeam = this.Teams.FirstOrDefault(t => t.TeamId == team.TeamId);
+        //     savedTeam.Name = team.Name;
+        //     this.SaveChanges();
+        // }
     }
 }
