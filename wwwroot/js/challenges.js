@@ -1,4 +1,4 @@
-window.onload= async()=>{
+window.onload = async()=>{
     const categories = await getData('api/category');
     document.getElementById('loading').style.display = 'none';
     // populate list of categories
@@ -13,7 +13,7 @@ window.onload= async()=>{
         if (!button) return;
         // remove active class from all buttons
         document.querySelectorAll('button.category').forEach((el) => {
-        el.classList.remove('active');
+            el.classList.remove('active');
         });
         // add active class to selected button
         button.classList.add('active');
@@ -22,20 +22,9 @@ window.onload= async()=>{
         const id = parseInt(button.dataset.id);
         const challenges = categories.filter(cat => cat.id == id)[0].challenges;
         challenges.forEach((challenge) => {
-        challengeHtml += '<a href="teams.html?pin=' + challenge.pin + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
+            challengeHtml += '<a href="teams.html?pin=' + challenge.pin + '&id=' + challenge.id + '" class="list-group-item list-group-item-action">' + challenge.name + '</a>';
         });
         document.getElementById('challengesList').style.display = 'block';
         document.getElementById('challenge').innerHTML = challengeHtml;
-    }
-}
-async function getData(url) {
-    // fetch data from api
-    try {
-        let res = await fetch(url);
-        let data = await res.json();
-        return await data;
-    } catch (error) {
-        // TODO: customize error
-        console.log(error);
     }
 }

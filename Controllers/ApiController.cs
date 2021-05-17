@@ -31,6 +31,7 @@ namespace MilkingPigeons.Controllers
                     return Conflict();
                 }
                 _dataContext.AddTeam(team);
+                return Ok(team);
             } else {
                 // make sure team name and team id match
                 if (_dataContext.Teams.Any(t => t.TeamId == team.TeamId && t.Name == team.Name) == false)
@@ -40,7 +41,33 @@ namespace MilkingPigeons.Controllers
                 // return no content if team name and teamd id already exist
                 return NoContent();
             }
-            return Ok(team);
+        }
+        
+        [HttpGet, Route("api/teamchallenge/{id}")]
+        public IActionResult GetTeamChallenges(int id)
+        {
+            var teams = _dataContext.TeamChallenges.Where(tc => tc.ChallengeId == id).Select(tc => new Team{ TeamId = tc.TeamId, Name = tc.Team.Name });
+            if (teams.Count() == 0)
+            {
+                return NoContent();
+            }
+            return Ok(teams);
+        }
+        [HttpPost, Route("api/teamchallenge")]
+        public IActionResult AddTeamToChallenge([FromBody] TeamChallengeJson teamChallengeJson)
+        {
+            var challenge = _dataContext.Challenges.FirstOrDefault(ch => ch.Pin == teamChallengeJson.Pin && ch.Active == true);
+            // check for valid challenge pin / valid team id
+            if (challenge == null || !_dataContext.Teams.Any(t => t.TeamId == teamChallengeJson.TeamId))
+            {
+                 return BadRequest();
+            } else if (_dataContext.TeamChallenges.Any(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == teamChallengeJson.TeamId)) {
+                // duplicate TeamId / ChallengeId
+                return Conflict();
+            }
+            
+            _dataContext.AddTeamChallenge(new TeamChallenge(){ TeamId = teamChallengeJson.TeamId, ChallengeId = challenge.ChallengeId });
+            return Ok();
         }
     }
 }

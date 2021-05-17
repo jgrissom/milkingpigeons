@@ -11,6 +11,7 @@ namespace MilkingPigeons.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Challenge> Challenges { get; set; }
+        public DbSet<TeamChallenge> TeamChallenges { get; set; }
         public Team AddTeam(Team team)
         {
             this.Teams.Add(team);
@@ -23,5 +24,10 @@ namespace MilkingPigeons.Models
         //     savedTeam.Name = team.Name;
         //     this.SaveChanges();
         // }
+        public void AddTeamChallenge(TeamChallenge teamChallenge)
+        {
+            this.TeamChallenges.Add(teamChallenge);
+            this.SaveChanges();
+        }
     }
 }
