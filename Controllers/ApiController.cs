@@ -28,7 +28,7 @@ namespace MilkingPigeons.Controllers
                 // add new team, first check for duplicate team name
                 if (_dataContext.Teams.Any(t => t.Name == team.Name))
                 {
-                    return Conflict();
+                    return BadRequest();
                 }
                 _dataContext.AddTeam(team);
                 return Ok(team);
