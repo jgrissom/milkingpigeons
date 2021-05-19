@@ -67,7 +67,7 @@ namespace MilkingPigeons.Controllers
             }
             
             _dataContext.AddTeamChallenge(new TeamChallenge(){ TeamId = teamChallengeJson.TeamId, ChallengeId = challenge.ChallengeId });
-            return Ok();
+            return NoContent();
         }
     }
 }
