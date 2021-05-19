@@ -24,10 +24,11 @@ namespace MilkingPigeons.Models
         //     savedTeam.Name = team.Name;
         //     this.SaveChanges();
         // }
-        public void AddTeamChallenge(TeamChallenge teamChallenge)
+        public int AddTeamChallenge(TeamChallenge teamChallenge)
         {
             this.TeamChallenges.Add(teamChallenge);
             this.SaveChanges();
+            return teamChallenge.TeamChallengeId;
         }
     }
 }

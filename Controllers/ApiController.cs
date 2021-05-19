@@ -63,11 +63,11 @@ namespace MilkingPigeons.Controllers
                  return BadRequest();
             } else if (_dataContext.TeamChallenges.Any(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == teamChallengeJson.TeamId)) {
                 // duplicate TeamId / ChallengeId
-                return Conflict();
+                return Ok(_dataContext.TeamChallenges.FirstOrDefault(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == teamChallengeJson.TeamId).TeamChallengeId);
             }
             
-            _dataContext.AddTeamChallenge(new TeamChallenge(){ TeamId = teamChallengeJson.TeamId, ChallengeId = challenge.ChallengeId });
-            return Ok(challenge.ChallengeId);
+            int teamChallengeId = _dataContext.AddTeamChallenge(new TeamChallenge(){ TeamId = teamChallengeJson.TeamId, ChallengeId = challenge.ChallengeId });
+            return Ok(teamChallengeId);
         }
     }
 }
