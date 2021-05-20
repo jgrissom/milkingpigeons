@@ -30,5 +30,10 @@ namespace MilkingPigeons.Models
             this.SaveChanges();
             return teamChallenge.TeamChallengeId;
         }
+        public void DeleteTeamChallenge(TeamChallenge team)
+        {
+            this.TeamChallenges.Remove(team);
+            this.SaveChanges();
+        }
     }
 }

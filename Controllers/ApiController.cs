@@ -46,28 +46,40 @@ namespace MilkingPigeons.Controllers
         [HttpGet, Route("api/teamchallenge/{id}")]
         public IActionResult GetTeamChallenges(int id)
         {
-            var teams = _dataContext.TeamChallenges.Where(tc => tc.ChallengeId == id).Select(tc => new Team{ TeamId = tc.TeamId, Name = tc.Team.Name });
+            var teams = _dataContext.TeamChallenges.Where(tc => tc.ChallengeId == id).Select(tc => new teamChallengeJson{ TeamChallengeId = tc.TeamChallengeId, Name = tc.Team.Name });
             if (teams.Count() == 0)
             {
                 return NoContent();
             }
             return Ok(teams);
         }
-        [HttpPost, Route("api/teamchallenge")]
-        public IActionResult AddTeamToChallenge([FromBody] TeamChallengeJson teamChallengeJson)
+        [HttpGet, Route("api/teamchallenge/{id}/count")]
+        public IActionResult GetTeamChallengesCount(int id)
         {
-            var challenge = _dataContext.Challenges.FirstOrDefault(ch => ch.Pin == teamChallengeJson.Pin && ch.Active == true);
+            int count = _dataContext.TeamChallenges.Where(tc => tc.ChallengeId == id).Count();
+            return Ok(count);
+        }
+        [HttpPost, Route("api/teamchallenge")]
+        public IActionResult AddTeamToChallenge([FromBody] AddTeamChallengeJson addTeamChallengeJson)
+        {
+            var challenge = _dataContext.Challenges.FirstOrDefault(ch => ch.Pin == addTeamChallengeJson.Pin && ch.Active == true);
             // check for valid challenge pin / valid team id
-            if (challenge == null || !_dataContext.Teams.Any(t => t.TeamId == teamChallengeJson.TeamId))
+            if (challenge == null || !_dataContext.Teams.Any(t => t.TeamId == addTeamChallengeJson.TeamId))
             {
                  return BadRequest();
-            } else if (_dataContext.TeamChallenges.Any(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == teamChallengeJson.TeamId)) {
+            } else if (_dataContext.TeamChallenges.Any(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == addTeamChallengeJson.TeamId)) {
                 // duplicate TeamId / ChallengeId
-                return Ok(_dataContext.TeamChallenges.FirstOrDefault(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == teamChallengeJson.TeamId).TeamChallengeId);
+                return Ok(_dataContext.TeamChallenges.FirstOrDefault(tc => tc.ChallengeId == challenge.ChallengeId && tc.TeamId == addTeamChallengeJson.TeamId).TeamChallengeId);
             }
             
-            int teamChallengeId = _dataContext.AddTeamChallenge(new TeamChallenge(){ TeamId = teamChallengeJson.TeamId, ChallengeId = challenge.ChallengeId });
+            int teamChallengeId = _dataContext.AddTeamChallenge(new TeamChallenge(){ TeamId = addTeamChallengeJson.TeamId, ChallengeId = challenge.ChallengeId });
             return Ok(teamChallengeId);
+        }
+        [HttpDelete, Route("api/teamchallenge/{id}")]
+        public IActionResult RemoveTeamFromChallenge(int id)
+        {
+            _dataContext.DeleteTeamChallenge(_dataContext.TeamChallenges.FirstOrDefault(t => t.TeamChallengeId == id));
+            return NoContent();
         }
     }
 }
